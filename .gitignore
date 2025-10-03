@@ -417,7 +417,7 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-./build/
-./install/
-./log/
-./src/vis*
+build/
+install/
+log/
+src/vis*
