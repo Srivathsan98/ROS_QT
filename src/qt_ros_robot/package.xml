@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>qt_ros_robot</name>
+  <version>0.0.1</version>
+  <description>Qt PieMenu with ROS2</description>
+  <maintainer email="parthasrivachu@gmail.com">Your Name</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+
+  <!-- Qt is system installed, not a ROS dep -->
+</package>
