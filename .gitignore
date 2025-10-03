@@ -420,4 +420,4 @@ FodyWeavers.xsd
 build/
 install/
 log/
-src/vis*
+src/vision_opencv/
