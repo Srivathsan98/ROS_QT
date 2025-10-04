@@ -106,6 +106,8 @@ set(PROJECT_SOURCES
     mainwindow.ui
     direction_menu.cpp
     direction_menu.h
+    piemenu.cpp
+    piemenu.h
 )
 
 # ------------------------------
