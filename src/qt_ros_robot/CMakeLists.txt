@@ -25,6 +25,12 @@
 #         ${PROJECT_SOURCES}
 #         direction_menu.cpp
 #         direction_menu.h
+#         piemenu.cpp
+#         piemenu.h
+#         movement_control_single.cpp
+#         movement_control_single.h
+#         movement_control_single.ui
+
 #     )
 # # Define target properties for Android with Qt 6 as:
 # #    set_property(TARGET qt_ros_robot APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -45,6 +51,8 @@
 # endif()
 
 # target_link_libraries(qt_ros_robot PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+# target_include_directories(qt_ros_robot PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/qt_ros_robot_autogen/include)
 
 # # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # # If you are developing for iOS or macOS you should consider setting an
@@ -108,6 +116,9 @@ set(PROJECT_SOURCES
     direction_menu.h
     piemenu.cpp
     piemenu.h
+    movement_control_single.cpp
+    movement_control_single.h
+    movement_control_single.ui
 )
 
 # ------------------------------
@@ -139,12 +150,18 @@ target_link_libraries(qt_ros_robot
         rclcpp::rclcpp
 )
 
+target_include_directories(qt_ros_robot PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/qt_ros_robot_autogen/include)
+
 
 # ------------------------------
 # Install (ROS 2 style)
 # ------------------------------
 install(TARGETS qt_ros_robot
     DESTINATION lib/${PROJECT_NAME}
+)
+# Install resource files
+install(DIRECTORY ../res/icons
+    DESTINATION share/${PROJECT_NAME}/res
 )
 
 # Qt finalize for Qt6
