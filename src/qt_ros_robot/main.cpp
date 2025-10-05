@@ -22,13 +22,13 @@ int main(int argc, char *argv[])
 
     MovementControl move;
     move.show();
-
+#ifndef ROS_NODE
     qt_mqtt_comm* mqtt;
     mqtt = new qt_mqtt_comm(&move);
     mqtt->setHostname("localhost");
     mqtt->setPort(1883);
     qDebug() << "Connecting to MQTT broker at";
     mqtt->connectToHost();
-
+#endif
     return a.exec();
 }

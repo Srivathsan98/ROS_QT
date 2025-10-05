@@ -11,6 +11,10 @@
 #include <map>
 #include <QMainWindow>
 #include <QDebug>
+#ifdef ROS_NODE
+#include <rclcpp/rclcpp.hpp>
+#include "mqtt_ros_node.h"
+#endif
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,6 +30,7 @@ public:
     ~MovementControl();
 private:
     Ui::MovementControl *ui;
+    MQTTNode *mqttNode;
 
     void initMovementSignalSlotConnection();
 

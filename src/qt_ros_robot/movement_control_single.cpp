@@ -1,5 +1,6 @@
 #include "movement_control_single.h"
 #include "ui_movement_control_single.h"
+
 MovementControl::MovementControl(QWidget *parent)
     : QMainWindow{parent}
     , ui(new Ui::MovementControl)
@@ -24,29 +25,34 @@ void MovementControl::initMovementSignalSlotConnection()
 void MovementControl::onForwardButtonClicked()
 {
     emit moveforward();
+    mqttNode->publish("robot/move", "forward");
     qDebug() << "front signal emitted";
 }
 
 void MovementControl::onLeftButtonClicked()
 {
     emit moveleft();
+    mqttNode->publish("robot/move", "left");
     qDebug() << "left signal emitted";
 }
 
 void MovementControl::onRightButtonClicked()
 {
     emit moveright();
+    mqttNode->publish("robot/move", "right");
     qDebug() << "right signal emitted";
 }
 
 void MovementControl::onReverseButtonClicked()
 {
     emit movereverse();
+    mqttNode->publish("robot/move", "reverse");
     qDebug() << "reverse signal emitted";
 }
 
 void MovementControl::onStopButtonClicked()
 {
     emit stopmovement();
+    mqttNode->publish("robot/move", "stop");
     qDebug() << "stop signal emitted";
 }
