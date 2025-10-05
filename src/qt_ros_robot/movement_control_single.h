@@ -10,6 +10,7 @@
 #include <QtMath>
 #include <map>
 #include <QMainWindow>
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,5 +26,21 @@ public:
     ~MovementControl();
 private:
     Ui::MovementControl *ui;
+
+    void initMovementSignalSlotConnection();
+
+signals:
+    void moveforward();
+    void moveleft();
+    void moveright();
+    void movereverse();
+    void stopmovement();
+
+private slots:
+    void onForwardButtonClicked();
+    void onLeftButtonClicked();
+    void onRightButtonClicked();
+    void onReverseButtonClicked();
+    void onStopButtonClicked();
 };
 #endif // MOVEMENT_CONTROL_H
