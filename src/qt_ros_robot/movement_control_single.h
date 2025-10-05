@@ -11,6 +11,7 @@
 #include <map>
 #include <QMainWindow>
 #include <QDebug>
+#include <memory>
 #ifdef ROS_NODE
 #include <rclcpp/rclcpp.hpp>
 #include "mqtt_ros_node.h"
@@ -26,11 +27,11 @@ class MovementControl : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit MovementControl(QWidget *parent = nullptr);
+    explicit MovementControl(std::shared_ptr<MQTTNode> mqttNode, QWidget *parent = nullptr);
     ~MovementControl();
 private:
     Ui::MovementControl *ui;
-    MQTTNode *mqttNode;
+    std::shared_ptr<MQTTNode> mqttNode;
 
     void initMovementSignalSlotConnection();
 

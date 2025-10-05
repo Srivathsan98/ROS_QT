@@ -6,13 +6,29 @@ MQTTNode::MQTTNode(const std::string &broker_address, const std::string &client_
     mqtt::connect_options conn_opts_;
     try
     {
-        client_.connect(conn_opts_)->wait();
-        RCLCPP_INFO(this->get_logger(), "Connected to MQTT broker at %s", broker_address_.c_str());
+        // client_.connect(conn_opts_)->wait();
+        // RCLCPP_INFO(this->get_logger(), "Connected to MQTT broker at %s", broker_address_.c_str());
+
+        // Set a callback for when connected
+        client_.set_connected_handler([this](const std::string &)
+                                      {
+                                          RCLCPP_INFO(this->get_logger(), "Connected to MQTT broker at %s", broker_address_.c_str());
+                                          client_.subscribe("robot/move", 1); // async subscribe
+                                      });
+
+        // Start async connect (non-blocking)
+        client_.connect(conn_opts_); // no .wait()!
 
         // callback_ = [this](mqtt::const_message_ptr msg) { message_arrived(msg); };
         // client_.set_callback(callback_);
 
-        client_.subscribe("robot/move", 1)->wait();
+        // client_.subscribe("robot/move", 1)->wait();
+
+        //         client_.set_message_callback([this](mqtt::const_message_ptr msg) {
+        //     RCLCPP_INFO(this->get_logger(), "Received: %s -> %s",
+        //                 msg->get_topic().c_str(),
+        //                 msg->to_string().c_str());
+        // });
     }
     catch (const mqtt::exception &exc)
     {
@@ -37,7 +53,7 @@ void MQTTNode::publish(const std::string &topic, const std::string &payload)
     try
     {
         auto msg = mqtt::make_message(topic, payload);
-        client_.publish(msg)->wait_for(std::chrono::seconds(10));
+        client_.publish(msg)->wait_for(std::chrono::seconds(1));
         RCLCPP_INFO(this->get_logger(), "Published message to topic %s: %s", topic.c_str(), payload.c_str());
     }
     catch (const mqtt::exception &exc)

@@ -1,9 +1,10 @@
 #include "movement_control_single.h"
 #include "ui_movement_control_single.h"
 
-MovementControl::MovementControl(QWidget *parent)
+MovementControl::MovementControl(std::shared_ptr<MQTTNode> mqttNode, QWidget *parent)
     : QMainWindow{parent}
     , ui(new Ui::MovementControl)
+    , mqttNode(mqttNode)
 {
     ui->setupUi(this);
     initMovementSignalSlotConnection();
