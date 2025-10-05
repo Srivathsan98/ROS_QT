@@ -1,9 +1,9 @@
 #include "qt_mqtt_comm.h"
 
-qt_mqtt_comm::qt_mqtt_comm(QObject *parent)
+qt_mqtt_comm::qt_mqtt_comm(MovementControl *mc, QObject *parent)
     : QObject(parent)
     , m_client(new QMqttClient(this))
-    , movementControl(new MovementControl())
+    , movementControl(mc)
 {
     connect(m_client, &QMqttClient::connected, this, &qt_mqtt_comm::onConnected);
     connect(m_client, &QMqttClient::disconnected, this, &qt_mqtt_comm::onDisconnected);
@@ -20,7 +20,6 @@ qt_mqtt_comm::qt_mqtt_comm(QObject *parent)
 qt_mqtt_comm::~qt_mqtt_comm()
 {
     delete m_client;
-    delete movementControl;
 }
 
 void qt_mqtt_comm::initMqttClient(const QString &hostname, const quint16 port)
@@ -35,6 +34,7 @@ void qt_mqtt_comm::publishMessage(const QString &topic, const QString &message)
     if(m_client->state() == QMqttClient::Connected)
     {
         m_client->publish(topic, message.toUtf8());
+        qDebug() << "Published message to topic" << topic << ":" << message;
     }
     else
     {

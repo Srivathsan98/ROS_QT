@@ -15,7 +15,7 @@ class qt_mqtt_comm : public QObject
 {
     Q_OBJECT
 public:
-    explicit qt_mqtt_comm(QObject *parent = nullptr);
+    explicit qt_mqtt_comm(MovementControl *mc, QObject *parent = nullptr);
     ~qt_mqtt_comm();
 
     void initMqttClient(const QString &hostname, const quint16 port);
